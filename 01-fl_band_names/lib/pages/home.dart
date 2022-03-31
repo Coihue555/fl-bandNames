@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
         print('id: ${band.id}');
       },
       background: Container(
-        padding: EdgeInsets.only(left: 10),
+        padding: const EdgeInsets.only(left: 10),
         color: Colors.red,
         child: const Align(
           alignment: Alignment.centerLeft,
