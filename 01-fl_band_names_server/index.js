@@ -7,15 +7,8 @@ const app = express();
 
 //Node Server
 const server = require('http').createServer(app);
-const io = require('socket.io')(server);
-
-//Mensajes de sockets
-io.on('connection', client => {
-    client.on('disconnect', () => { 
-        console.log('Cliente desconectado')
-    });
-  });
-
+module.exports.io = require('socket.io')(server);
+require('./sockets/socket');
 
 
 //path publico
