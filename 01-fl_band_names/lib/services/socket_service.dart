@@ -1,32 +1,45 @@
 import 'package:flutter/material.dart';
+ 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
-
-enum ServerStatus{
-  Online,
-  Offline,
-  Connecting
-}
-
-
-class SocketService with ChangeNotifier{
+ 
+enum ServerStatus { Online, Offline, Connecting }
+ 
+class SocketService with ChangeNotifier {
   ServerStatus _serverStatus = ServerStatus.Connecting;
-
-  SocketService(){
+  late IO.Socket _socket;
+ 
+  ServerStatus get serverStatus => this._serverStatus;
+ 
+  IO.Socket get socket => this._socket;
+  Function get emit => this._socket.emit;
+ 
+  SocketService() {
     this._initConfig();
   }
-
-  void _initConfig(){
-    IO.Socket socket = IO.io('http://localhost:3001/', {
-      'transports': ['websocket'],
-      'autoConnect': true
+ 
+  void _initConfig() {
+    String urlSocket = 'http://200.117.13.68:3001';
+ 
+    this._socket = IO.io(
+        urlSocket,
+         IO.OptionBuilder()
+            .setTransports(['websocket']) // for Flutter or Dart VM
+            .enableAutoConnect()
+            .setExtraHeaders({'foo': 'bar'}) // optional
+            .build());
+ 
+    // Estado Conectado
+    this._socket.onConnect((_) {
+      this._serverStatus = ServerStatus.Online;
+      print('Conectado por Socket');
+      notifyListeners();
     });
-    socket.onConnect((_) {
-      print('connect');
+ 
+   // Estado Desconectado
+    this._socket.onDisconnect((_) {
+      this._serverStatus = ServerStatus.Offline;
+      print('Desconectado del Socket Server');
+      notifyListeners();
     });
-    
-    socket.onDisconnect((_) => print('disconnect'));
-    socket.on('fromServer', (_) => print(_));
   }
-
-
 }

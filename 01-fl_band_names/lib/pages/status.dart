@@ -11,9 +11,14 @@ class StatusScreen extends StatelessWidget {
 
     final socketService = Provider.of<SocketService>(context);
 
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-         child: Text('StatusScreen'),
+         child: Column(
+           mainAxisAlignment: MainAxisAlignment.center,
+           children: [
+             Text('Server status: ${socketService.serverStatus}')
+           ],
+         )
       ),
     );
   }
