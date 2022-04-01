@@ -18,28 +18,17 @@ class SocketService with ChangeNotifier {
   }
  
   void _initConfig() {
-    String urlSocket = 'http://localhost:3001';
- 
-    this._socket = IO.io(
-        urlSocket,
-         IO.OptionBuilder()
-            .setTransports(['websocket']) // for Flutter or Dart VM
-            .enableAutoConnect()
-            .setExtraHeaders({'foo': 'bar'}) // optional
-            .build());
- 
-    // Estado Conectado
-    this._socket.onConnect((_) {
-      this._serverStatus = ServerStatus.Online;
-      print('Conectado por Socket');
-      notifyListeners();
+    
+    IO.Socket socket = IO.io('https://localhost:3001/', {
+      'transports': ['websocket'],
+      'autoconnect': true
     });
- 
-   // Estado Desconectado
-    this._socket.onDisconnect((_) {
-      this._serverStatus = ServerStatus.Offline;
-      print('Desconectado del Socket Server');
-      notifyListeners();
+       
+    socket.on('connect', ( _ ){
+      print('connect');
     });
+
+    socket.on('disconnect', (_)=> print('disconnect'));
+    socket.on('fromServer', (_)=> print(_));
   }
 }

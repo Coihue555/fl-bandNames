@@ -11,7 +11,7 @@ io.on('connection', client => {
     client.on('mensaje', (payload)=> {
         console.log('Mensajeeee', payload);
 
-        io.emit('mensaje', {admin: 'Nuevo mensaje'} );
+        io.emit('mensaje', {admin: 'New msg'} );
     })
 
     client.on('mi-mensaje', (payload)=> {
