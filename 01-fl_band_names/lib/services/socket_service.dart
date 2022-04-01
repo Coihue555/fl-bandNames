@@ -56,7 +56,7 @@ class SocketService with ChangeNotifier {
  
   void _initConfig(){  
     _socket = IO.io(
-      "http://10.0.2.2:3001/",
+      "https://fl-bands-chart.herokuapp.com/",
       OptionBuilder()
         .setTransports(['websocket'])
         .enableAutoConnect() 
