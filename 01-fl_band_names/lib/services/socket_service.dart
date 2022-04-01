@@ -73,16 +73,10 @@ class SocketService with ChangeNotifier {
     _socket.onDisconnect((_) {
       _socket.emit('mensaje', 'desconectado desde app Flutter');
       _serverStatus = ServerStatus.Offline;
-      print('disconnectio');
+      print('disconnected');
       notifyListeners();
     });
 
-    // socket.on('nuevo-mensaje', (payload) {
-    //   print('nuevo-mensaje: ');
-    //   print('nombre:' + payload['nombre']);
-    //   print('mensaje:' + payload['mensaje']);
-    //   print( payload.containsKey('mensaje2') ? payload['mensaje2'] : 'no hay' );
-    // });
 
 
   }
