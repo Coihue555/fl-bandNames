@@ -42,14 +42,20 @@ enum ServerStatus{
  
 class SocketService with ChangeNotifier {
   late ServerStatus _serverStatus = ServerStatus.Connecting;
+  late IO.Socket _socket;
+
   ServerStatus get serverStatus => this._serverStatus;
- 
+  IO.Socket get socket => _socket;
+
+  Function get emit => _socket.emit;
+
+
   SocketService(){
     _initConfig();
   }
  
   void _initConfig(){  
-    IO.Socket socket = IO.io(
+    _socket = IO.io(
       "http://10.0.2.2:3001/",
       OptionBuilder()
         .setTransports(['websocket'])
@@ -57,15 +63,15 @@ class SocketService with ChangeNotifier {
         .build()
     );
  
-    socket.onConnect((_) {
-      socket.emit('mensaje', 'conectado desde app Flutter');
+    _socket.onConnect((_) {
+      _socket.emit('mensaje', 'conectado desde app Flutter');
       print('connect');
       _serverStatus = ServerStatus.Online;
       notifyListeners();
     });
  
-    socket.onDisconnect((_) {
-      socket.emit('mensaje', 'desconectado desde app Flutter');
+    _socket.onDisconnect((_) {
+      _socket.emit('mensaje', 'desconectado desde app Flutter');
       _serverStatus = ServerStatus.Offline;
       print('disconnectio');
       notifyListeners();
