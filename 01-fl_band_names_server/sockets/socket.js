@@ -8,6 +8,10 @@ io.on('connection', client => {
         console.log('Cliente desconectado')
     });
 
+    client.on('connect', () => { 
+        console.log('Cliente conectado de otro')
+    });
+
     client.on('mensaje', (payload)=> {
         console.log('Mensajeeee', payload);
 
