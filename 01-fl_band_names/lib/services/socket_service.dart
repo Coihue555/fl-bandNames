@@ -18,7 +18,7 @@ class SocketService with ChangeNotifier {
   }
  
   void _initConfig() {
-    String urlSocket = 'http://200.117.13.68:3001';
+    String urlSocket = 'http://localhost:3001';
  
     this._socket = IO.io(
         urlSocket,
